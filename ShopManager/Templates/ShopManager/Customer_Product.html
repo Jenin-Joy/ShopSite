@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            background-color: white;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgb(209, 209, 209);
+            margin-bottom: 150px;
+        }
+        tr:nth-child(even) {
+            background-color: rgb(239, 239, 239);
+        }
+    </style>
+</head>
+<script type="text/javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+<body>
+    <form action="" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <table cellpadding="10" align="center">
+            <tr>
+                <td colspan="5" align="right"><a href="{% url 'ShopManager:shophomepage' %}">Home</a></td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>product</td>
+                <td>item Quantity</td>
+                <td>item price</td>
+                <td>Action</td>
+                
+            </tr> 
+            {% for i in item %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.product.product_name}}</td>
+                <td>{{i.item_qty}}</td>
+                <td>{{i.item_price}}</td>
+                <td>
+                    {% if i.feedback == 0 %}
+                    <a href="{% url 'ShopManager:givefeedback' i.product.id customer purchase %}">Give Feedback</a>        
+                    {% else %}
+                    <span>FeedBack Sended</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </form>
+        </table>
+</body>
+</html>

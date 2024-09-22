@@ -1,0 +1,65 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action=""  method="POST">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <td>Sl No</td>
+                <td>Product</td>
+                <td>Photo</td>
+                <td>Price</td>
+                <td>Stock</td>
+                <td>Quantity</td>
+                <td>Action</td>
+            </tr>
+            {% for i in items %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.product.product_name}}</td>
+                <td><img src="{{i.product.product_photo.url}}" width="150" height="150" alt="" ></td>
+                <td>{{i.product.product_price}}</td>
+                <td>{{stock}}</td>
+                <td><input alt="{{i.id}}" type="number" value="{{i.item_qty}}" min="1" max="{{stock}}"  id="qty" class="qty"/></td>
+                <td>{{i.item_qty|mul:i.product.product_price}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $(".qty").on('change', function() {
+            var qty = $(this).val();
+            var $row = $(this).closest('tr');
+            var price = $row.data('price');
+            var itemId = $row.data('item-id');
+            
+            // Update total price in the row
+            var total = qty * price;
+            $row.find('.total').text(total.toFixed(2));
+            
+            // Send AJAX request to update quantity in the server
+            var ur = $("#Form").data('quantity-url');
+            $.ajax({
+                url: ur,
+                data: { QTY: qty, ALT: itemId },
+                success: function(response) {
+                    // Handle success if needed
+                },
+                
+            });
+        });
+    });
+</script>

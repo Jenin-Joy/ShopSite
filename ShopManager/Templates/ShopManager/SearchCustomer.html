@@ -1,0 +1,84 @@
+{% extends 'ShopManager/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            background-color: white;
+            margin-top: 150px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgb(209, 209, 209);
+            margin-bottom: 150px;
+        }
+        tr:nth-child(even) {
+            background-color: rgb(239, 239, 239);
+        }
+        input[type=text]{
+            border-radius: 10px;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+        .payed {
+            background-color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: red;
+            transition: transform 1.9s ease-in-out;
+            text-decoration: none;
+        }
+        .payed:hover{
+            color: white;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table cellpadding="10" align="center">
+            <tr>
+                <td>Customer Number</td>
+                <td><input type="text" name="Number" id="Number" onkeyup="checkNumber(this.value)" required></td>
+                <td>Customer Name</td>
+                <td><input type="text" name="Name" id="Name" required></td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    <input type="submit" name="btnsubmit" value="submit" class="payed">
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function checkNumber(num) {
+        // console.log(num);
+        
+        var ur = "{% url 'ShopManager:ajaxcustomer' %}"
+        $.ajax({
+            url: ur,
+            data: { num: num, },
+            success: function (data) {
+                // $("#Name").html(data);
+                if (data.msg == "No User Found")
+                {
+                    // console.log(data.msg);                    
+                    document.getElementById("Name").placeholder  = data.msg
+                    document.getElementById("Name").value  = ""
+                }
+                else{
+                    document.getElementById("Name").value  = data.msg
+                }
+            },
+        });
+    }
+</script>
+{% endblock content %}

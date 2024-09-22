@@ -1,0 +1,20 @@
+<table align="center" id="data" cellpadding="10">       
+    <tr>
+        <td>#</td>
+        <td>Customer</td>
+        <td>Product</td>
+        <td>Quantity</td>
+        <td>Amount</td>
+        <td>Date</td>
+    </tr>
+    {% for i in sales %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{i.purchase.customer.customer_name}}</td>
+        <td>{{i.product.product_name}}</td>
+        <td>{{i.item_qty}}</td>
+        <td>{{i.item_price}}</td>
+        <td>{{i.purchase.purchase_date|date}}</td> 
+    </tr>
+    {% endfor %}
+</table>

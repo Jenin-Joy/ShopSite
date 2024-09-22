@@ -1,0 +1,106 @@
+{% extends 'ShopManager/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <style>
+        .con {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+        }
+        body {
+            /* background-color: rgb(244, 244, 244); */
+        }
+        table {
+            background-color: white;
+            margin-top: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgb(209, 209, 209);
+        }
+        tr:nth-child(even) {
+            background-color: rgb(239, 239, 239);
+        }
+        .addicon {
+            font-size: 25px;
+            padding-left: 10px;
+            color: red;
+        }
+        .addicon:hover {
+            color: rgb(42, 255, 38);
+        }
+        .payed {
+            background-color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            color: red;
+            transition: transform 1.9s ease-in-out;
+            text-decoration: none;
+        }
+        .payed:hover{
+            color: white;
+            background-color: red;
+        }
+        input[type=text]{
+            border-radius: 10px;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+        .con {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <div class="con">
+        <div>Search Product <input type="text" name="Product" id="Product" onkeyup="checkItems(this.value)"><input type="hidden" name="customerid" id="customerid" value="{{customer}}"></div>
+    </div>
+    <table align="center" id="data" cellpadding="10">
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Photo</td>
+            <td>Stock</td>
+        </tr>
+        {% for i in product %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.product_name}}</td>
+            <td><img src="{{i.product_photo.url}}" width="80" height="80" alt=""></td>
+            <td>{{i.stocktotal}}</td> 
+        </tr>
+        {% endfor %}
+    </form>
+    </table>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function checkItems(num) {
+        // console.log(num);
+        
+        var ur = "{% url 'ShopManager:ajaxsearchstock' %}"
+        $.ajax({
+            url: ur,
+            data: { num: num, },
+            success: function (data) {
+                $("#data").html(data);
+            },
+        });
+    }
+</script>
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <table align="center" cellpadding="10">
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="Text" name="Name" id="" class="form-control" value="{{editshop.shop_name}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="email" name="txt_email" id="" class="form-control"
+                                value="{{editshop.shop_email}}"></td>
+                    </tr>
+                    <tr>
+                        <td>Details</td>
+                        <td><input type="Text" name="Details" id="" class="form-control"
+                                value="{{editshop.shop_details}}"></td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td><input type="file" name="filephoto" id="" class="form-control"
+                                value="{{editshop.shop_photo}}"> </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="Text" name="Password" id="" class="form-control"
+                                value="{{editshop.shop_password}}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <input type="submit" name="btnregister" value="Register" class="btn btn-primary">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'Admin:Shop' %}"
+    </script>
+    {% endif %}
+    <br>
+    <!-- <div class="col-sm-12 col-xl-6"> -->
+        <div class="bg-light rounded h-100 p-4">
+            <table class="table table-hover">
+                <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Details</td>
+                    <td>Password</td>
+                    <td>Photo</td>
+                    <td colspan="2" align="center">Action</td>
+                </tr>
+                {% for i in shop %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.shop_name}}</td>
+                    <td>{{i.shop_email}}</td>
+                    <td>{{i.shop_details}}</td>
+                    <td>{{i.shop_password}}</td>
+                    <td><img src="{{i.shop_photo.url}}" width="80" height="80" alt=""></td>
+
+                    <td><a href="{% url 'Admin:deleteshop' i.id %}">Delete</a></td>
+                    <td><a href="{% url 'Admin:editshop' i.id %}">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock content %}

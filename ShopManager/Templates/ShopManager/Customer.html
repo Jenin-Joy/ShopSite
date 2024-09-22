@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <td>Customer Name</td>
+                <td><input type="text" name="Name" id=""></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text" name="Contact" id=""></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="submit">
+                </td>
+            </tr>
+        </table>
+        
+    </form>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'ShopManager:customer' %}"
+    </script>
+    {% endif %}
+    <table border="1">
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Contact</td>
+            <td>Activity</td>
+            
+        </tr>
+        {% for i in customers %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.customer_name}}</td>
+            <td>{{i.customer_contact}}</td>
+            <td><a href="{% url 'ShopManager:deletecustomer' i.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action=""  method="POST">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <td>#</td>
+                <td>Name</td>
+                <td>Contact</td>
+            </tr>
+            {% for i in customers %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.customer_name}}</td>
+                <td>{{i.customer_contact}}</td>  
+                <td><a href="{% url 'ShopManager:feedbackproduct' %}">View more</a></td> 
+            </tr>
+            {% endfor %}
+        </form>
+    </table>  
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'Guest/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            margin-top: 130px;
+            margin-bottom: 150px;
+        }
+        input[type=text],[type=submit]{
+            border-radius: 10px;
+            border: 1px solid gray;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+   <form action="" method="post">
+    {% csrf_token %}
+    <table align="center"cellpadding="10">
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="txtemail" id=""></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" name="txtpassword" id=""></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit"  value="Login"></td>
+            
+        </tr>
+    </table>
+   </form>
+</body>
+</html>
+{% endblock content %}

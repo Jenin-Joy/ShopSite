@@ -1,0 +1,59 @@
+{% extends 'Admin/Header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="Name" id=""></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="Email" id=""></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" name="password" id=""></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnadd" value="Add">
+                </td>
+            </tr>
+        </table>
+    </form>
+    {% if msg %}
+    <script>
+        alert("{{msg}}")
+        window.location = "{% url 'Admin:Admin_Registration' %}"
+    </script>
+    {% endif %}
+    <table border="1">
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Password</td>
+            <td>Action</td>
+        </tr>
+        {% for i in registration %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.admregistration_name}}</td>
+            <td>{{i.admregistration_email}}</td>
+            <td>{{i.admregistration_password}}</td>
+            <td><a href="{% url 'Admin:deleteregistration' i.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>   
+</body>
+</html>
+{% endblock content %}
